@@ -15,7 +15,7 @@ const sentiment = new Sentiment();
 
 function handleConnection(request, wsServer) {
 	const connection = request.accept(null, request.origin);
-	console.log(`Client connected from ${connection.remoteAddress}`);
+	// console.log(`Client connected from ${connection.remoteAddress}`);
 
 	addClient(connection);
 	sendHistoryToClient(connection);

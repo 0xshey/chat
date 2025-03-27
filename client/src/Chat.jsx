@@ -7,6 +7,7 @@ function Chat() {
 	const [usernameInput, setUsernameInput] = useState("");
 	const [users, setUsers] = useState([]);
 	const [connected, setConnected] = useState(false);
+	const [paused, setPaused] = useState(false);
 	const socketRef = useRef(null);
 
 	console.log("Chat rendered");
@@ -25,6 +26,21 @@ function Chat() {
 			}
 		};
 
+		socketRef.current.onclose = () => {
+			console.log("WebSocket connection closed.");
+			setConnected(false);
+		};
+
+		return () => {
+			if (socketRef.current.readyState === WebSocket.OPEN) {
+				socketRef.current.close();
+			}
+		};
+	}, [username]);
+
+	useEffect(() => {
+		if (!socketRef.current) return;
+
 		socketRef.current.onmessage = (event) => {
 			const receivedMessage = JSON.parse(event.data);
 
@@ -39,24 +55,15 @@ function Chat() {
 				]);
 			}
 
-			setMessages([...messages, receivedMessage]);
+			// setMessages([...messages, receivedMessage]);
+			console.log(receivedMessage);
 		};
-
-		socketRef.current.onclose = () => {
-			console.log("WebSocket connection closed.");
-			setConnected(false);
-		};
-
-		return () => {
-			if (socketRef.current.readyState === 1) {
-				socketRef.current.close();
-			}
-		};
-	}, [username]);
+	}, [paused]);
 
 	function sendMessage() {
 		if (input.trim() !== "") {
 			const message = {
+				type: "message",
 				text: input,
 				timestamp: new Date().toISOString(),
 			};
@@ -100,6 +107,7 @@ function Chat() {
 							))}
 						</ul>
 					</div>
+					<p>{messages.length} messages</p>
 					<div
 						style={{
 							border: "1px solid #ccc",
@@ -111,8 +119,7 @@ function Chat() {
 					>
 						{messages.map((msg, index) => (
 							<p key={index}>
-								[{msg.timestamp}]: {msg.text} (Sentiment:{" "}
-								{msg.sentiment})
+								<strong>{msg.username}</strong> {msg.text}
 							</p>
 						))}
 					</div>
