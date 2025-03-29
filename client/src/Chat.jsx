@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
+import ChatWindow from "./components/chat/window";
+
 function Chat() {
 	const [messages, setMessages] = useState([]);
 	const [input, setInput] = useState("");
@@ -108,6 +110,10 @@ function Chat() {
 						</ul>
 					</div>
 					<p>{messages.length} messages</p>
+
+					{/* Chat Window */}
+					<ChatWindow messages={messages} />
+
 					<div
 						style={{
 							border: "1px solid #ccc",
@@ -123,6 +129,7 @@ function Chat() {
 							</p>
 						))}
 					</div>
+
 					<input
 						type="text"
 						value={input}

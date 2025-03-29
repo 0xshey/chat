@@ -1,0 +1,16 @@
+.chat-window {
+	display: flex;
+	flex-direction: column;
+	max-height: 20vh;
+	overscroll-behavior-y: scroll;
+	background-color: #f1f1f1;
+	margin: 8px;
+	border-radius: 12px;
+	border: 1px solid rgba(0,0,0,0.2)
+}
+
+.messages-container {
+	flex: 1;
+	overflow-y: auto;
+	padding: 16px;
+}
