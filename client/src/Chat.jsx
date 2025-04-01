@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-import ChatWindow from "./components/chat/window";
+import ChatWindow from "./components/chat-window";
 
 function Chat() {
 	const [messages, setMessages] = useState([]);
@@ -112,31 +112,21 @@ function Chat() {
 					<p>{messages.length} messages</p>
 
 					{/* Chat Window */}
-					<ChatWindow messages={messages} />
+					<ChatWindow messages={messages} username={username} />
 
-					<div
-						style={{
-							border: "1px solid #ccc",
-							height: "300px",
-							overflowY: "scroll",
-							marginBottom: "1rem",
-							margin: "20px",
-						}}
-					>
-						{messages.map((msg, index) => (
-							<p key={index}>
-								<strong>{msg.username}</strong> {msg.text}
-							</p>
-						))}
+					{/*  Input */}
+					<div className={"message-input-container"}>
+						<input
+							type="text"
+							className={"message-input"}
+							value={input}
+							onChange={(e) => setInput(e.target.value)}
+							placeholder="iMessage"
+						/>
+						<button onClick={sendMessage} className="send-button">
+							Send
+						</button>
 					</div>
-
-					<input
-						type="text"
-						value={input}
-						onChange={(e) => setInput(e.target.value)}
-						placeholder="Type a message..."
-					/>
-					<button onClick={sendMessage}>Send: {input}</button>
 				</>
 			)}
 		</div>

@@ -1,11 +1,10 @@
 import React from "react";
-import styles from "./message.module.css";
 
 function Message({ text, sender, isCurrentUser }) {
 	return (
 		<div
-			className={`${styles.message} ${
-				isCurrentUser ? styles["current-user"] : styles["other-user"]
+			className={`message ${
+				isCurrentUser ? "current-user" : "other-user"
 			}`}
 		>
 			{!isCurrentUser && <MessageSenderAvatar sender={sender} />}
@@ -20,10 +19,8 @@ function Message({ text, sender, isCurrentUser }) {
 function MessageBubble({ text, isCurrentUser }) {
 	return (
 		<div
-			className={`${styles["message-bubble"]} ${
-				isCurrentUser
-					? styles["current-user-bubble"]
-					: styles["other-user-bubble"]
+			className={`message-bubble ${
+				isCurrentUser ? "current-user-bubble" : "other-user-bubble"
 			}`}
 		>
 			{text}
@@ -32,13 +29,11 @@ function MessageBubble({ text, isCurrentUser }) {
 }
 
 function MessageSenderAvatar({ sender }) {
-	return (
-		<div className={styles.avatar}>{sender.charAt(0).toUpperCase()}</div>
-	);
+	return <div className="avatar">{sender.charAt(0).toUpperCase()}</div>;
 }
 
 function MessageSenderName({ name }) {
-	return <div className={styles["sender-name"]}>{name}</div>;
+	return <div className="sender-name">{name}</div>;
 }
 
 export default Message;
