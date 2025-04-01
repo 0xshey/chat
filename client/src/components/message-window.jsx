@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Message from "./message";
 
-export default function ChatWindow({ messages, username }) {
+export default function MessageWindow({ messages, username }) {
 	const messagesEndRef = useRef(null);
 
 	const scrollToBottom = () => {
@@ -13,7 +13,7 @@ export default function ChatWindow({ messages, username }) {
 	}, [messages]);
 
 	return (
-		<div className={"chat-window"}>
+		<div className={"message-window"}>
 			<div className={"messages-container"}>
 				{messages.map((msg, index) => (
 					<Message

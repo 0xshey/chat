@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-import ChatWindow from "./components/chat-window";
+import MessageWindow from "./components/message-window";
 
 function Chat() {
 	const [messages, setMessages] = useState([]);
@@ -97,35 +97,56 @@ function Chat() {
 					<button onClick={handleUsernameSubmit}>Submit</button>
 				</div>
 			) : (
-				<>
-					<h2>
-						Chatting as <em>{username}</em>
+				<div className="chat-header">
+					<h2 className="chatting-as">
+						Chatting as <em className="username">{username}</em>
 					</h2>
-					<div>
-						<h3>Users online</h3>
-						<ul>
-							{users.map((user, index) => (
-								<li key={index}>{user}</li>
-							))}
-						</ul>
-					</div>
-					<p>{messages.length} messages</p>
+					<p className="message-count">{messages.length} messages</p>
+				</div>
+			)}
 
-					{/* Chat Window */}
-					<ChatWindow messages={messages} username={username} />
+			{username && (
+				<>
+					<div className="main-window">
+						<div className="sidebar">
+							{/* Online Users */}
+							<ul className="active-list">
+								<h3>Online Now</h3>
+								{users.map((user, index) => (
+									<li className="active-user" key={index}>
+										{user}
+									</li>
+								))}
+							</ul>
+						</div>
 
-					{/*  Input */}
-					<div className={"message-input-container"}>
-						<input
-							type="text"
-							className={"message-input"}
-							value={input}
-							onChange={(e) => setInput(e.target.value)}
-							placeholder="iMessage"
-						/>
-						<button onClick={sendMessage} className="send-button">
-							Send
-						</button>
+						<div className="chat-window">
+							<div>
+								{/* Chat Window */}
+								<MessageWindow
+									messages={messages}
+									username={username}
+								/>
+								{/*  Input */}
+								<div className={"message-input-container"}>
+									<input
+										type="text"
+										className={"message-input"}
+										value={input}
+										onChange={(e) =>
+											setInput(e.target.value)
+										}
+										placeholder="iMessage"
+									/>
+									<button
+										onClick={sendMessage}
+										className="send-button"
+									>
+										Send
+									</button>
+								</div>
+							</div>
+						</div>
 					</div>
 				</>
 			)}
